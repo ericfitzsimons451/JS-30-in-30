@@ -58,22 +58,24 @@
     window.addEventListener('keydown', playAudio) 
     
     function playAudio (e) {
-      const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
-      const key = document.querySelector(`.key[data-key="${e.keyCode}"]`)
-      if (!audio) return;
+      const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)// find the audio file via data-key
+      const key = document.querySelector(`.key[data-key="${e.keyCode}"]`)// find the key where audio should connect via-data key
+      if (!audio) return;  //if there is no audio, do nothing
       audio.currentTime = 0; // rewind to start of audio file so that it can always replay
       audio.play() // play the sound
-      key.classList.add('playing')
+      key.classList.add('playing')// add a classlist for styling
     }
 
     function removeTransition(e) {
       // this fires when all the transition events have completed
-      if (e.propertyName !== "transform") return  // if there is no transform property on the event, return
-      this.classList.remove('playing') // if there is a class of playing, remove it
+      // so instead of firing at the time of the event, it fires when the event ends
+      if (e.propertyName !== "transform") return  // if there is no 'transform' PROPERTY on the event, return
+              // the transform property is given by the CSS transformation
+      this.classList.remove('playing') // remove the classlist used for styling
     }
 
-    const keys = document.querySelectorAll('.key')
-    keys.forEach(key => key.addEventListener('transitionend', removeTransition))
+    const keys = document.querySelectorAll('.key')  // find all elements with the className 'key'
+    keys.forEach(key => key.addEventListener('transitionend', removeTransition)) // add event listener to link the function to ALL DOM nodes with .key className
   </script>
 </body>
 </html>
